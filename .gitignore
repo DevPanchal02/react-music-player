@@ -1,0 +1,10 @@
+### Client ###
+
+client/node_modules
+client/bower_components
+
+### Server ###
+server/node_modules
+server/.env
+
+# End 
