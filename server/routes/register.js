@@ -36,7 +36,9 @@ check("lastName").notEmpty().withMessage("Please Enter your Name")], async (req,
             lastName: req.body.lastName,
             email: req.body.email,
             password: hashPass,
-            role: req.body.role,
+            role: "test",
+            active: true
+
         })
         const newUser = await addUser.save()
         res.status(201).json(newUser);

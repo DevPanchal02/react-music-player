@@ -20,6 +20,9 @@ router.post("/login",[check('email').isEmail().normalizeEmail().withMessage("Ple
     if (!user) {
         return res.status(401).send("Invalid Email or Password");
     }
+    if (user.active == false) {
+        return res.status(403).send("Account has been deactivated");
+    }
     const validPassword = await bcrypt.compare (req.body.password, user.password);
     if (!validPassword) {
         return res.status(401).send("Invalid Email or Password");

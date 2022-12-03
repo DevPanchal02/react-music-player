@@ -23,6 +23,10 @@ const usersSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
+    active: {
+        type:Boolean,
+        required: true,
+    }
 })
 
 usersSchema.methods.generateAuthKey = function () {

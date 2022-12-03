@@ -2,11 +2,10 @@ require ('dotenv').config();
 const express = require ('express');
 const app = express();
 const cors = require ('cors');
-//const bodyParser = require ('body-parser');
 const database = require('./db');
-const mongoose = require("mongoose");
 const registerRoute = require('./routes/register');
 const loginRoute = require('./routes/login');
+const updateUserRoute = require('./routes/updateUser');
 
 
 //Connects to Database
@@ -17,8 +16,12 @@ app.use(express.json());
 app.use(cors());
 
 //routes
+//Registration Route
 app.use("/api", registerRoute);
+//Sign-In Route
 app.use("/api", loginRoute);
+//Update Account Route
+app.use("/api", updateUserRoute);
 
 const port = process.env.PORT || 3000;
 app.listen(port,() => console.log(`Connected on port ${port}`));
