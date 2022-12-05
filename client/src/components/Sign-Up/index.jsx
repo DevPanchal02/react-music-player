@@ -1,9 +1,9 @@
 import React from 'react'
 import styles from './styles.module.css';
-import { Link} from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import {useState} from 'react';
 import axios from 'axios';
-import { Navigate } from 'react-router-dom';
+
 
 export default function Index() {
 
@@ -12,29 +12,31 @@ export default function Index() {
     lastName: "",
     email: "",
     password: ""
-  })
+  });
   
-  const [error, setError] = useState("")
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = ({currentTarget: input}) => {
     setData({...data, [input.name]: input.value})
   }
+  
   const handleSubmitButton = async(e) =>{
     e.preventDefault()
     try {
       const url = 'http://localhost:3000/api/register';
       const {data: res} = await axios.post(url, data);
       console.log(res.message);
-      Navigate('signin')
-    }catch (error){
-      if (
-				error.response && error.response.status >= 400 && error.response.status <= 500
-			) 
-      {
-				setError(error.response.data.message);
-			}
+      navigate('/signin');
+
     }
-  };
+    catch (error) {
+      if (error.response.data.errors !== undefined){
+				setError(error.response.data.errors[0].msg);
+      }
+      setError(error.response.data.message);
+		}
+	};
 
   return (
     <div className={styles.register_container}>
