@@ -6,7 +6,7 @@ const database = require('./db');
 const registerRoute = require('./routes/register');
 const loginRoute = require('./routes/login');
 const updateUserRoute = require('./routes/updateUser');
-
+const musicRoute = require('./routes/music');
 
 //Connects to Database
 database();
@@ -22,6 +22,8 @@ app.use("/api", registerRoute);
 app.use("/api", loginRoute);
 //Update Account Route
 app.use("/api", updateUserRoute);
+//Music Route for data
+app.use("/api", musicRoute);
 
 const port = process.env.PORT || 3000;
 app.listen(port,() => console.log(`Connected on port ${port}`));
