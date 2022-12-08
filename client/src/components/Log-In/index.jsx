@@ -9,6 +9,7 @@ export default function Index() {
     const [data, setData] = useState({email: "", password: ""});
     const [error, setError] = useState("");
 
+    //Handles log-in submission button by posting to the URL
     const handleSubmitButton = async (e) => {
         e.preventDefault();
 

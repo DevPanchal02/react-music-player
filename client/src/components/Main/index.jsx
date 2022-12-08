@@ -17,7 +17,7 @@ export default function Index() {
 	const [toggleCleared, setToggleCleared] = React.useState(false);
   const [visible, setVisible] = React.useState()
 
-
+//Sets up colums for the table
   const colums = [
     {
       name: '#',
@@ -54,6 +54,7 @@ export default function Index() {
     }
   ];
 
+  //Sets data for when the tables expand
   const ExpandedComponent = ({ data }) => <pre>
     Track ID:{data.track_id} {<br/>}
     Album ID:{data.album_id} {<br/>}
@@ -74,6 +75,7 @@ export default function Index() {
 
   </pre>;
 
+//Fetches data for the table
   async function fetchTableDate() {
     setLoading(true)
     const URL = "http://localhost:3000/api/data/tracks"
@@ -87,6 +89,7 @@ export default function Index() {
     fetchTableDate()
   },[])
 
+  //Handles search input
   const handleSearch = (e) => {
 
     const getSearch = e.target.value;
@@ -104,6 +107,7 @@ export default function Index() {
 }
 
   const navigate = useNavigate();
+  //Handles update account button
   const onUpdateAccount = async(e)=>{
     e.preventDefault();
     if (!localStorage.getItem("token")){
@@ -114,6 +118,7 @@ export default function Index() {
     navigate('/update-password')
     }
   } 
+  //Handles logout button
   const onLogout = async(e) => {
     e.preventDefault();
     if (!localStorage.getItem("token")){
@@ -133,7 +138,7 @@ export default function Index() {
     })
     navigate(`/main/${link}`, {state : {values: filteredData, name: 'Street Music'}});
   }
-
+//Handles public playlist
   const onRockPlaylist= () => {
     let link = Math.random().toString(36).slice(2)
     let filteredData = data.filter(function (search){
@@ -141,7 +146,7 @@ export default function Index() {
     })
     navigate(`/main/${link}`, {state : {values: filteredData, name: 'Rock Music'}});
   }
-
+//Handles public playlist
   const onPop= () => {
     let link = Math.random().toString(36).slice(2)
     let filteredData = data.filter(function (search){
@@ -149,6 +154,7 @@ export default function Index() {
     })
     navigate(`/main/${link}`, {state : {values: filteredData, name: 'Pop Music'}});
   }
+  //Handles public playlist
   const onFolk= () => {
     let link = Math.random().toString(36).slice(2)
     let filteredData = data.filter(function (search){
@@ -156,6 +162,7 @@ export default function Index() {
     })
     navigate(`/main/${link}`, {state : {values: filteredData, name: 'Folk Music'}});
   }
+  //Handles public playlist
   const onMostPlayed= () => {
     let link = Math.random().toString(36).slice(2)
     let filteredData = data.filter(function (search){
@@ -163,7 +170,7 @@ export default function Index() {
     })
     navigate(`/main/${link}`, {state : {values: filteredData, name: 'Most Played'}});
   }
-
+//Handles selection of the rows
   const handleRowSelected = React.useCallback(state => {
 		setSelectedRows(state.selectedRows);
 	}, []);

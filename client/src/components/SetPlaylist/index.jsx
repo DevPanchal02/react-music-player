@@ -10,7 +10,7 @@ export default function Index() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-
+//Use effect that pulls data sent from main component
   useEffect(() => {
     function loadData(){
     setLoading(true);
