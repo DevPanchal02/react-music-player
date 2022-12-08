@@ -46,7 +46,7 @@ router.patch('/updateActive/:id', async (req, res) => {
    }
 
 })
-
+//Helps update the user password
 router.patch('/updatePassword/:id',[
     check('newPassword').notEmpty().withMessage("Please Enter a Password"), 
     check('newPassword').isStrongPassword().withMessage("Please Enter a Strong Password")], async (req, res) => {
