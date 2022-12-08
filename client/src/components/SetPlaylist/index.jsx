@@ -44,6 +44,11 @@ export default function Index() {
 
     },
     {
+      name: "Listens",
+      selector: (row) => row.track_listens,
+      sortable: true
+    },
+    {
       name: "Duration",
       selector: (row) => row.track_duration,
       sortable: true
@@ -61,6 +66,7 @@ export default function Index() {
   Track Number:{data.track_number} {<br/>}
   Track Title:{data.track_title} {<br/>}
   Genres:{data.track_genres} {<br/>}
+  Listens: {data.track_listens} {<br/>}
   {<br/>}
   <button 
     onClick={() => window.open(`https://www.youtube.com/results?search_query=${data.album_title +" " +data.artist_name +" "+data.track_title}`)}>

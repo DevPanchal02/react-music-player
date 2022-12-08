@@ -4,6 +4,7 @@ const csv = require('csv-parser');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const router = require ("express").Router();
+const Playlist = require('../models/playlist');
 
 //Creates empty arrays for neccessary values
 let artistsArr = [];
@@ -60,7 +61,7 @@ fs.createReadStream('../data/raw_tracks.csv').pipe(csv({})).on('data', (data) =>
         track_genres : data.track_genres,
         track_number : data.track_number,
         track_title : data.track_title,
-        track_listens : data.track_listens
+        track_listens : Number(data.track_listens)
     } 
     //pushes object into genres array
     tracksArr.push(tracks_info);
@@ -78,6 +79,25 @@ router.get  ("/data/genres", async (req, res) => {
 router.get  ("/data/tracks", async (req, res) => {
     res.send (tracksArr);
 });
+
+//Gets Playlist from Database
+
+//Saves Playlist to Database
+router.post('/data/playlist', async (req, res) => {
+    const playlist = new Playlist ({
+        playlistName: req.body.playlistName,
+        email: req.body.email,
+        data: req.body.data
+    })
+    try {
+        const newPlaylist = await playlist.save()
+        res.status(201).json (newPlaylist);
+    }
+    catch (err){
+        res.status(400).json({message : err.message})
+    }
+})
+
 
 
 
