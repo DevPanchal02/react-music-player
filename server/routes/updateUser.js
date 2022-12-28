@@ -46,7 +46,6 @@ router.patch('/updateActive/:id', async (req, res) => {
    }
 
 })
-<<<<<<< HEAD
 
 //Updates User account so the admin can give other users admin
 router.patch('/updateAdmin/:id', async (req, res) => {
@@ -66,9 +65,6 @@ router.patch('/updateAdmin/:id', async (req, res) => {
  
  })
 
-=======
-//Helps update the user password
->>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
 router.patch('/updatePassword/:id',[
     check('newPassword').notEmpty().withMessage("Please Enter a Password"), 
     check('newPassword').isStrongPassword().withMessage("Please Enter a Strong Password")], async (req, res) => {

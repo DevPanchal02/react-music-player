@@ -9,32 +9,17 @@ const crypto = require ('crypto');
 router.get("/register", async (req, res) => {
     res.send ("Register Working");
 })
-<<<<<<< HEAD
-
-=======
-//Input validation for each of the entires
->>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
 router.post("/register",[check('email').notEmpty().isEmail().withMessage("Please Enter a valid Email").normalizeEmail(), 
 check('password').notEmpty().withMessage("Please Enter a Password"), 
 check('password').isStrongPassword().withMessage("Please Enter a Strong Password"),
 check("firstName").notEmpty().withMessage("Please Enter your Name"),
 check("lastName").notEmpty().withMessage("Please Enter your Name")], async (req, res) => {
 
-<<<<<<< HEAD
-
-=======
-//Saves errors and displays them
->>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
     const errors = validation = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({errors: errors.array()
         })
     }
-<<<<<<< HEAD
-
-=======
-//Verifies and Adds user to the database
->>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
     const User = await users.findOne({
             email: req.body.email
         });
@@ -71,11 +56,6 @@ check("lastName").notEmpty().withMessage("Please Enter your Name")], async (req,
     }
     });
 
-<<<<<<< HEAD
-
-=======
-//Token router to check when the user has confirmed their email
->>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
     router.get("/:id/verify/:token/", async (req, res) => {
        
             const user = await users.findOne({_id: req.params.id});

@@ -16,15 +16,10 @@ const playlistSchema = new mongoose.Schema ({
     data: {
         type: Array,
         required: true,
-<<<<<<< HEAD
     },
     review: {
         type: String,
     }
-=======
-    }
-
->>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
 })
 
 module.exports = mongoose.model ('playlist', playlistSchema);
