@@ -27,8 +27,10 @@ export default function Index() {
       const url = 'http://localhost:3000/api/register';
       const {data: res} = await axios.post(url, data);
       console.log(res.message);
-      navigate('/signin');
-
+      setError(res.message);
+      setTimeout(function() {
+        navigate('/signin');
+      }, 2000);
     }
     catch (error) {
       if (error.response.data.errors !== undefined){

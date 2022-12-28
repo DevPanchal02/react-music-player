@@ -46,7 +46,7 @@ router.post("/login",[check('email').isEmail().normalizeEmail().withMessage("Ple
     }
 
     const token = user.generateAuthKey();
-    res.status(200).json({data: token, Name:user.firstName+" "+user.lastName, message: "Logged in Successfully"});
+    res.status(200).json({data: token,email:user.email,Name:user.firstName+" "+user.lastName, message: "Logged in Successfully"});
 })
 
 

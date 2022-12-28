@@ -16,7 +16,13 @@ export default function Index() {
             const url = 'http://localhost:3000/api/login';
             const { data: res } = await axios.post(url, data);
             localStorage.setItem("token", res.data);
+            localStorage.setItem("email", res.email);
+            if (localStorage.getItem('email') == 'admin@admin.com'){
+              window.location = "/admin";
+            }
+            else {
             window.location = "/main";
+            }
         }
         catch (error){
             setError(error.response.data);

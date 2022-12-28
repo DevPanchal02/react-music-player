@@ -5,6 +5,7 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const router = require ("express").Router();
 const Playlist = require('../models/playlist');
+const { Router } = require('express');
 
 //Creates empty arrays for neccessary values
 let artistsArr = [];
@@ -80,10 +81,22 @@ router.get  ("/data/tracks", async (req, res) => {
     res.send (tracksArr);
 });
 
-//Gets Playlist from Database
+
+//Gets Playlist from Database for specific email
+router.get('/data/playlist/:id', async (req, res) => {
+    try {
+        const playlist = await Playlist.find({email: req.params.id});
+        res.json(playlist)
+    }
+    catch(error) {
+        res.status(500).json({message: error.message})
+    }
+
+})
 
 //Saves Playlist to Database
 router.post('/data/playlist', async (req, res) => {
+
     const playlist = new Playlist ({
         playlistName: req.body.playlistName,
         email: req.body.email,
@@ -98,8 +111,32 @@ router.post('/data/playlist', async (req, res) => {
     }
 })
 
+//Deletes specific Playlist from Database
+router.delete('/data/playlist/:id', async (req, res) => {
 
+    try {
+        const playlist = await Playlist.deleteOne({"playlistName": req.params.id});
+        res.json(playlist)
+    }
+    catch(error) {
+        res.status(500).json({message: error.message})
+    }
 
+})
+
+//Add Review to Playlist
+
+router.post('/data/playlist/:id', async (req, res) => {
+
+    try {
+        const playlist = await Playlist.findOneAndUpdate({"playlistName": req.params.id}, {"review" : req.body.review});
+        res.json(playlist)
+    }
+    catch(error) {
+        res.status(500).json({message: error.message})
+    }
+
+})
 
 
 module.exports = router;

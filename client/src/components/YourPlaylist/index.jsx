@@ -2,6 +2,7 @@ import React from 'react'
 import DataTable from 'react-data-table-component';
 import {useState, useEffect} from 'react';
 import { useNavigate, useLocation } from 'react-router-dom'
+import axios from 'axios';
 
 export default function Index() {
   const {state} = useLocation();
@@ -9,13 +10,19 @@ export default function Index() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
+  const [error, setError] = useState("");
+  const [userReview, setUserReview] = useState('');
+  const [addReview, setAddReview] = useState('');
+  const [reviewMessage, setReviewMessage] = useState('');
+  
+  
 
   useEffect(() => {
     function loadData(){
     setLoading(true);
     setData(values);
     setLoading(false);
+    setUserReview(review);
     }
     loadData()
   },[])
@@ -74,6 +81,47 @@ export default function Index() {
   </button>    
 
 </pre>;
+async function handleDeletion() {
+    const url = `http://localhost:3000/api/data/playlist/${name}`
+    const res = await axios.delete(url);
+    console.log('Playlist Deleted');
+}
+
+const handleDelete = () => {
+    try {
+        handleDeletion();
+        setError("Playlist Has Been Deleted")
+        setTimeout(function() {
+            navigate('/main');
+          }, 1500);
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+async function handleReviews() {
+    const url = `http://localhost:3000/api/data/playlist/${name}`
+    const res = axios.post(url, {review: addReview})
+    console.log(res);
+}
+const addNewReview = () => {
+    try {
+        handleReviews();
+        setReviewMessage('Review Added')
+        setTimeout(function() {
+            navigate('/main');
+          }, 1500);
+    }
+    catch(error){
+        console.log(error.message);
+    }
+}
+
+
+
+const handleAddReview =(e) => {
+    setAddReview(e.target.value);
+}
 
     return (
         
@@ -84,10 +132,23 @@ export default function Index() {
          {'◄'} Back 
     </button>    
     </div>
+    <div>
+        <br />
+        <button type='button' onClick={handleDelete}>Delete Playlist</button>
+    </div>
+    {error && <div>{error}</div>}
      <div>
       <DataTable title ={name} columns={colums} data={data} progressPending={loading} pagination expandableRows expandableRowsComponent={ExpandedComponent}/>
     </div>
-
+    <div>
+        <input type='text' value={addReview} onChange={handleAddReview} placeholder="Add Review"></input>
+        <button type='button' onClick={addNewReview}>Submit</button>
+        {reviewMessage && <div>{reviewMessage}</div>}
+    </div>
+    <div>
+        <h4>Reviews:</h4>
+        {userReview}
+    </div>
     </div>
 
   )

@@ -47,6 +47,24 @@ router.patch('/updateActive/:id', async (req, res) => {
 
 })
 
+//Updates User account so the admin can give other users admin
+router.patch('/updateAdmin/:id', async (req, res) => {
+    try {
+     const email = req.params.id;
+     const result = await users.findOneAndUpdate({email: email}, {role: "admin"});
+     if (result){
+     res.json({message: "User Account Updated"});
+     }
+     else if (!result) {
+        res.status(404).json({message: "User not found"});
+     }
+    }
+    catch (error) {
+     res.status(400).json({message: error.msg});
+    }
+ 
+ })
+
 router.patch('/updatePassword/:id',[
     check('newPassword').notEmpty().withMessage("Please Enter a Password"), 
     check('newPassword').isStrongPassword().withMessage("Please Enter a Strong Password")], async (req, res) => {

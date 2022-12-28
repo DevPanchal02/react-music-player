@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import DataTable from 'react-data-table-component';
 import {useState, useEffect} from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
+
 
 
 
@@ -13,9 +13,10 @@ export default function Index() {
   const [filterData, setFilterData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState('');
+  const [playlistName, setPlaylistName] = useState("");
   const [selectedRows, setSelectedRows] = React.useState([]);
 	const [toggleCleared, setToggleCleared] = React.useState(false);
-  const [visible, setVisible] = React.useState()
+  const [addPlaylist, setAddPlaylist] = React.useState([]);
 
 
   const colums = [
@@ -82,9 +83,16 @@ export default function Index() {
     setFilterData(res.data);
     setLoading(false);
   }
+  async function fetchPlaylists() {
+    const URL = `http://localhost:3000/api/data/playlist/${localStorage.getItem("email")}`
+    const res = await axios.get(URL);
+    setAddPlaylist(res.data);
+    console.log(res.data)
+  }
 
   useEffect(() => {
     fetchTableDate()
+    fetchPlaylists()
   },[])
 
   const handleSearch = (e) => {
@@ -102,6 +110,7 @@ export default function Index() {
   }
   setQuery(getSearch); 
 }
+
 
   const navigate = useNavigate();
   const onUpdateAccount = async(e)=>{
@@ -122,6 +131,7 @@ export default function Index() {
     }
     else {
       localStorage.setItem("token", "");
+      localStorage.setItem("email", "");
       navigate('/');
     }
   }
@@ -164,25 +174,57 @@ export default function Index() {
     navigate(`/main/${link}`, {state : {values: filteredData, name: 'Most Played'}});
   }
 
+  async function yourPlaylist(yourData){
+    let link = Math.random().toString(36).slice(2);
+    navigate(`/main/playlist/${link}`, {state : {values: yourData.data, name: yourData.playlistName, review: yourData.review}});
+  }
+
+  async function onAddPlaylist(){
+    const URL = "http://localhost:3000/api/data/playlist"
+    const res = await axios.post(URL, {
+      playlistName: playlistName,
+      email: localStorage.getItem("email"),
+      data: selectedRows
+    });
+    console.log(res);
+    console.log(selectedRows)
+  }
+function handleYourPlaylists() {
+  let arr = [];
+
+  for(let i = 0;i<addPlaylist.length;i++){
+      
+      arr.push(<button type='button' onClick={() => yourPlaylist(addPlaylist[i])}>{addPlaylist[i].playlistName}</button>);
+  }
+  return arr;
+  }
+
   const handleRowSelected = React.useCallback(state => {
 		setSelectedRows(state.selectedRows);
 	}, []);
 
+  const handlePlaylistName = React.useCallback(state => {
+		setPlaylistName(state.target.value);
+	}, []);
+
 	const contextActions = React.useMemo(() => {
+  
 		const handleAddPlaylist = () => {
 			
-			if (window.confirm(`Are you sure you want to create a playlist with these songs:\r ${selectedRows.map(r => r.title)}?`)) {
+			if (window.confirm(`Are you sure you want to create a playlist with these songs:\r ${selectedRows.map(r => r.Title)}?`)) {
 				setToggleCleared(!toggleCleared);
-        
+        onAddPlaylist(); 
+        window.location.reload();
 			}
 		};
 
 		return (
       <span>
+      <input type="text" value={playlistName} placeholder='Playlist Name' onChange={handlePlaylistName}/>
 			<button key="add" onClick={handleAddPlaylist} style={{ backgroundColor: 'red' }} icon>Add to Playlist</button>
       </span>
 		);
-	}, [data, selectedRows, toggleCleared]);
+	}, [data, selectedRows, toggleCleared, playlistName]);
 
 
   return (
@@ -200,6 +242,11 @@ export default function Index() {
     <span><button type='button' onClick ={onFolk}>Folk</button></span>
     <br></br>
     <br></br>
+    <div>Your Own Playlists</div>
+    <span>
+    {handleYourPlaylists()}
+    </span>
+    <br></br>
     <div>
       <div>Search for Music</div>
       <input type="text" name='name' value={query} placeholder='Search' onChange={(e) =>handleSearch(e)}/>
@@ -211,3 +258,4 @@ export default function Index() {
     </div>
   )
 }
+
