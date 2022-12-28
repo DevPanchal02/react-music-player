@@ -5,12 +5,20 @@ import { useNavigate, useLocation } from 'react-router-dom'
 
 export default function Index() {
   const {state} = useLocation();
+<<<<<<< HEAD
   const {values, name, review} = state;
+=======
+  const {values, name} = state;
+>>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+<<<<<<< HEAD
 
+=======
+//Use effect that pulls data sent from main component
+>>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
   useEffect(() => {
     function loadData(){
     setLoading(true);

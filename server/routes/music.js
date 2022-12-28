@@ -5,7 +5,10 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const router = require ("express").Router();
 const Playlist = require('../models/playlist');
+<<<<<<< HEAD
 const { Router } = require('express');
+=======
+>>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
 
 //Creates empty arrays for neccessary values
 let artistsArr = [];
@@ -81,6 +84,7 @@ router.get  ("/data/tracks", async (req, res) => {
     res.send (tracksArr);
 });
 
+<<<<<<< HEAD
 
 //Gets Playlist from Database for specific email
 router.get('/data/playlist/:id', async (req, res) => {
@@ -97,6 +101,12 @@ router.get('/data/playlist/:id', async (req, res) => {
 //Saves Playlist to Database
 router.post('/data/playlist', async (req, res) => {
 
+=======
+//Gets Playlist from Database
+
+//Saves Playlist to Database
+router.post('/data/playlist', async (req, res) => {
+>>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
     const playlist = new Playlist ({
         playlistName: req.body.playlistName,
         email: req.body.email,
@@ -111,6 +121,7 @@ router.post('/data/playlist', async (req, res) => {
     }
 })
 
+<<<<<<< HEAD
 //Deletes specific Playlist from Database
 router.delete('/data/playlist/:id', async (req, res) => {
 
@@ -137,6 +148,10 @@ router.post('/data/playlist/:id', async (req, res) => {
     }
 
 })
+=======
+
+
+>>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
 
 
 module.exports = router;

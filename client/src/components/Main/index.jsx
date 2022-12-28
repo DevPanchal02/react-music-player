@@ -3,7 +3,11 @@ import {useNavigate} from 'react-router-dom';
 import DataTable from 'react-data-table-component';
 import {useState, useEffect} from 'react';
 import axios from 'axios';
+<<<<<<< HEAD
 
+=======
+import styled from 'styled-components';
+>>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
 
 
 
@@ -13,12 +17,20 @@ export default function Index() {
   const [filterData, setFilterData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState('');
+<<<<<<< HEAD
   const [playlistName, setPlaylistName] = useState("");
   const [selectedRows, setSelectedRows] = React.useState([]);
 	const [toggleCleared, setToggleCleared] = React.useState(false);
   const [addPlaylist, setAddPlaylist] = React.useState([]);
 
 
+=======
+  const [selectedRows, setSelectedRows] = React.useState([]);
+	const [toggleCleared, setToggleCleared] = React.useState(false);
+  const [visible, setVisible] = React.useState()
+
+//Sets up colums for the table
+>>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
   const colums = [
     {
       name: '#',
@@ -55,6 +67,10 @@ export default function Index() {
     }
   ];
 
+<<<<<<< HEAD
+=======
+  //Sets data for when the tables expand
+>>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
   const ExpandedComponent = ({ data }) => <pre>
     Track ID:{data.track_id} {<br/>}
     Album ID:{data.album_id} {<br/>}
@@ -75,6 +91,10 @@ export default function Index() {
 
   </pre>;
 
+<<<<<<< HEAD
+=======
+//Fetches data for the table
+>>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
   async function fetchTableDate() {
     setLoading(true)
     const URL = "http://localhost:3000/api/data/tracks"
@@ -83,6 +103,7 @@ export default function Index() {
     setFilterData(res.data);
     setLoading(false);
   }
+<<<<<<< HEAD
   async function fetchPlaylists() {
     const URL = `http://localhost:3000/api/data/playlist/${localStorage.getItem("email")}`
     const res = await axios.get(URL);
@@ -95,6 +116,14 @@ export default function Index() {
     fetchPlaylists()
   },[])
 
+=======
+
+  useEffect(() => {
+    fetchTableDate()
+  },[])
+
+  //Handles search input
+>>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
   const handleSearch = (e) => {
 
     const getSearch = e.target.value;
@@ -111,8 +140,13 @@ export default function Index() {
   setQuery(getSearch); 
 }
 
+<<<<<<< HEAD
 
   const navigate = useNavigate();
+=======
+  const navigate = useNavigate();
+  //Handles update account button
+>>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
   const onUpdateAccount = async(e)=>{
     e.preventDefault();
     if (!localStorage.getItem("token")){
@@ -123,6 +157,10 @@ export default function Index() {
     navigate('/update-password')
     }
   } 
+<<<<<<< HEAD
+=======
+  //Handles logout button
+>>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
   const onLogout = async(e) => {
     e.preventDefault();
     if (!localStorage.getItem("token")){
@@ -131,7 +169,10 @@ export default function Index() {
     }
     else {
       localStorage.setItem("token", "");
+<<<<<<< HEAD
       localStorage.setItem("email", "");
+=======
+>>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
       navigate('/');
     }
   }
@@ -143,7 +184,11 @@ export default function Index() {
     })
     navigate(`/main/${link}`, {state : {values: filteredData, name: 'Street Music'}});
   }
+<<<<<<< HEAD
 
+=======
+//Handles public playlist
+>>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
   const onRockPlaylist= () => {
     let link = Math.random().toString(36).slice(2)
     let filteredData = data.filter(function (search){
@@ -151,7 +196,11 @@ export default function Index() {
     })
     navigate(`/main/${link}`, {state : {values: filteredData, name: 'Rock Music'}});
   }
+<<<<<<< HEAD
 
+=======
+//Handles public playlist
+>>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
   const onPop= () => {
     let link = Math.random().toString(36).slice(2)
     let filteredData = data.filter(function (search){
@@ -159,6 +208,10 @@ export default function Index() {
     })
     navigate(`/main/${link}`, {state : {values: filteredData, name: 'Pop Music'}});
   }
+<<<<<<< HEAD
+=======
+  //Handles public playlist
+>>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
   const onFolk= () => {
     let link = Math.random().toString(36).slice(2)
     let filteredData = data.filter(function (search){
@@ -166,6 +219,10 @@ export default function Index() {
     })
     navigate(`/main/${link}`, {state : {values: filteredData, name: 'Folk Music'}});
   }
+<<<<<<< HEAD
+=======
+  //Handles public playlist
+>>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
   const onMostPlayed= () => {
     let link = Math.random().toString(36).slice(2)
     let filteredData = data.filter(function (search){
@@ -173,6 +230,7 @@ export default function Index() {
     })
     navigate(`/main/${link}`, {state : {values: filteredData, name: 'Most Played'}});
   }
+<<<<<<< HEAD
 
   async function yourPlaylist(yourData){
     let link = Math.random().toString(36).slice(2);
@@ -199,10 +257,14 @@ function handleYourPlaylists() {
   return arr;
   }
 
+=======
+//Handles selection of the rows
+>>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
   const handleRowSelected = React.useCallback(state => {
 		setSelectedRows(state.selectedRows);
 	}, []);
 
+<<<<<<< HEAD
   const handlePlaylistName = React.useCallback(state => {
 		setPlaylistName(state.target.value);
 	}, []);
@@ -215,16 +277,31 @@ function handleYourPlaylists() {
 				setToggleCleared(!toggleCleared);
         onAddPlaylist(); 
         window.location.reload();
+=======
+	const contextActions = React.useMemo(() => {
+		const handleAddPlaylist = () => {
+			
+			if (window.confirm(`Are you sure you want to create a playlist with these songs:\r ${selectedRows.map(r => r.title)}?`)) {
+				setToggleCleared(!toggleCleared);
+        
+>>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
 			}
 		};
 
 		return (
       <span>
+<<<<<<< HEAD
       <input type="text" value={playlistName} placeholder='Playlist Name' onChange={handlePlaylistName}/>
 			<button key="add" onClick={handleAddPlaylist} style={{ backgroundColor: 'red' }} icon>Add to Playlist</button>
       </span>
 		);
 	}, [data, selectedRows, toggleCleared, playlistName]);
+=======
+			<button key="add" onClick={handleAddPlaylist} style={{ backgroundColor: 'red' }} icon>Add to Playlist</button>
+      </span>
+		);
+	}, [data, selectedRows, toggleCleared]);
+>>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
 
 
   return (
@@ -242,11 +319,14 @@ function handleYourPlaylists() {
     <span><button type='button' onClick ={onFolk}>Folk</button></span>
     <br></br>
     <br></br>
+<<<<<<< HEAD
     <div>Your Own Playlists</div>
     <span>
     {handleYourPlaylists()}
     </span>
     <br></br>
+=======
+>>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
     <div>
       <div>Search for Music</div>
       <input type="text" name='name' value={query} placeholder='Search' onChange={(e) =>handleSearch(e)}/>
@@ -258,4 +338,7 @@ function handleYourPlaylists() {
     </div>
   )
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> d0696699fd317e1bedfb8693709bf4c3051808ed
